@@ -99,8 +99,12 @@
             width="100%" 
             style="border:none; width:100%; height:100%; position:absolute; left:0; top:0; overflow:hidden;">
     </iframe>
-  </div><button id="playButton">Ayudar a Kilua</button> <button id="loadAnotherButton">Abrir Puerta</button>
-
+  </div>
+  <button id="playButton">Ayudar a Kilua</button> 
+  <button id="loadAnotherButton">Abrir Puerta</button>
+  <button id="loadAnotherButton">Abrir Rejilla</button> 
+  <button id="loadAnotherButton">Ver Ordenadores</button>
+ 
   <script>
     document.getElementById("playButton").addEventListener("click", function() {
       const videoPlayer = document.getElementById('videoPlayer');
@@ -112,7 +116,7 @@
         
         setTimeout(function() {
           document.getElementById('loadAnotherButton').style.display = 'block';
-        }, 25000);
+        }, 30000);
       }, 500);
     });
 
