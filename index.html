@@ -23,11 +23,20 @@
       left: 0;
       width: 100%;
       height: 100%;
+      z-index: 0; /* Video estará detrás */
     }
-    audio {
-      display: none;
+    #overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.7); /* Capa oscura */
+      z-index: 1; /* Capa por encima del video */
     }
     button {
+      position: absolute;
+      z-index: 2; /* El botón está por encima de todo */
       padding: 10px 20px;
       font-size: 16px;
       cursor: pointer;
@@ -35,14 +44,16 @@
       color: white;
       border: none;
       border-radius: 5px;
-      margin-top: 20px;
     }
   </style>
 </head>
 <body>
 
+  <!-- Capa oscura que tapa el video antes de hacer clic -->
+  <div id="overlay"></div>
+
   <!-- Contenedor para el reproductor de video con autoplay y sin audio -->
-  <div style="position:relative; width:100%; height:0px; padding-bottom:177.778%">
+  <div id="player" style="position:relative; width:100%; height:100%">
     <iframe id="videoPlayer" allow="fullscreen;autoplay" allowfullscreen height="100%" 
             src="https://streamable.com/e/ytg9h7?autoplay=0&loop=0&nocontrols=1" 
             width="100%" 
@@ -50,11 +61,7 @@
     </iframe>
   </div>
 
-  <!-- Contenedor para el audio del repositorio -->
-  <audio id="audio" preload="auto">
-    <source src="historia1audio.mp3" type="audio/mp3">
-    Tu navegador no soporta el elemento de audio.
-  </audio>
+
 
   <!-- Botón para iniciar la reproducción del video y el audio -->
   <button id="playButton">Iniciar Video y Audio</button>
@@ -76,6 +83,9 @@
       // Desactivar el audio del video (poner volumen en 0)
       const iframe = document.querySelector('iframe');
       iframe.contentWindow.postMessage('{"event":"command","func":"mute","args":""}', '*');
+
+      // Eliminar la capa oscura y mostrar el video
+      document.getElementById('overlay').style.display = 'none';
     });
   </script>
 
