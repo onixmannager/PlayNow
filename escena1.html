@@ -52,8 +52,6 @@
                   inset 0 0 10px rgba(0, 255, 0, 0.2);
       transition: all 0.3s ease;
       margin: 0 10px;
-    }
-    #playButton, #unmuteButton {
       opacity: 0;
       pointer-events: none;
     }
@@ -68,11 +66,6 @@
       flex-wrap: wrap;
       justify-content: center;
       max-width: 90%;
-    }
-    .loadAnotherButton {
-      display: block !important;
-      opacity: 1 !important;
-      pointer-events: all !important;
     }
     #unmuteButton {
       background: linear-gradient(145deg, #2d1a1a, #3d2d2d);
@@ -142,10 +135,10 @@
           setTimeout(() => {
             document.getElementById('overlay').classList.add('hidden');
             
-            // Mostrar botones de opción después de 30 segundos
+            // CAMBIO PRINCIPAL: 27 segundos en lugar de 30
             setTimeout(() => {
               document.getElementById('buttonContainer').style.display = 'flex';
-            }, 30000);
+            }, 27000); // 27,000 milisegundos = 27 segundos
           }, 500);
         }
       };
@@ -153,19 +146,23 @@
       // Autoejecución segura
       setTimeout(() => {
         startVideo(true);
+        playButton.style.display = 'none';
       }, 1000);
 
       // Manejar activación de sonido
       const enableSound = () => {
         if(videoStarted) {
           videoPlayer.src = videoPlayer.src.replace('&mute=1', '&mute=0');
+          unmuteButton.style.display = 'none';
         }
       };
 
-      // Evento de clic en cualquier parte para activar sonido
+      // Eventos de interacción
       document.body.addEventListener('click', () => {
-        if(videoStarted) enableSound();
+        if(!videoStarted) startVideo(true);
       });
+
+      unmuteButton.addEventListener('click', enableSound);
 
       // Control de botones de opciones
       document.querySelectorAll(".loadAnotherButton").forEach(button => {
