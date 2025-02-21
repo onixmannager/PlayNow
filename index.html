@@ -45,8 +45,14 @@
       border: none;
       border-radius: 5px;
       left: 50%;
+      transform: translateX(-50%);
+    }
+    #playButton {
       top: 50%;
-      transform: translate(-50%, -50%); /* Centrado perfecto */
+    }
+    #loadAnotherButton {
+      bottom: 20px; /* Ubicar el botón en la parte baja */
+      display: none; /* Inicialmente está oculto */
     }
     .hidden {
       display: none !important;
@@ -57,22 +63,51 @@
 
   <div id="overlay"></div>
 
-  <div style="position:relative; width:100%; height:0px; padding-bottom:177.778%"><iframe allow="fullscreen" allowfullscreen height="100%" src="https://streamable.com/e/ytg9h7?nocontrols=1" width="100%" style="border:none; width:100%; height:100%; position:absolute; left:0px; top:0px; overflow:hidden;"></iframe></div>
+  <div id="player" style="position:relative; width:100%; height:100%">
+    <iframe id="videoPlayer" allow="fullscreen;autoplay" allowfullscreen height="100%" 
+            src="https://streamable.com/e/ytg9h7?autoplay=0&loop=0&nocontrols=1" 
+            width="100%" 
+            style="border:none; width:100%; height:100%; position:absolute; left:0; top:0; overflow:hidden;">
+    </iframe>
+  </div>
 
   <button id="playButton">Iniciar Video</button>
+  <button id="loadAnotherButton">Cargar Otro Video</button>
 
   <script>
-  document.getElementById("playButton").addEventListener("click", function() {
-    const videoPlayer = document.getElementById('videoPlayer');
-    videoPlayer.src = "https://streamable.com/e/ytg9h7?autoplay=1&loop=0&nocontrols=1";
+    document.getElementById("playButton").addEventListener("click", function() {
+      const videoPlayer = document.getElementById('videoPlayer');
+      videoPlayer.src = "https://streamable.com/e/ytg9h7?autoplay=1&loop=0&nocontrols=1";
     
-    // Retrasar la ocultación de ambos elementos
-    setTimeout(function() {
-      document.getElementById('overlay').classList.add('hidden');
-      document.getElementById('playButton').classList.add('hidden');
-    }, 500); // 500 milisegundos = 0.5 segundos
-  });
-</script>
+      // Retrasar la ocultación de ambos elementos
+      setTimeout(function() {
+        document.getElementById('overlay').classList.add('hidden');
+        document.getElementById('playButton').classList.add('hidden');
+        
+        // Mostrar el nuevo botón después de 5 segundos
+        setTimeout(function() {
+          document.getElementById('loadAnotherButton').style.display = 'block';
+        }, 5000); // 5000 milisegundos = 5 segundos
+      }, 500); // 500 milisegundos = 0.5 segundos
+    });
+
+    document.getElementById("loadAnotherButton").addEventListener("click", function() {
+      const newIframe = document.createElement('iframe');
+      newIframe.src = "https://www.example.com"; // URL que deseas cargar
+      newIframe.width = "100%";
+      newIframe.height = "100%";
+      newIframe.style.border = "none";
+      newIframe.style.position = "absolute";
+      newIframe.style.left = "0";
+      newIframe.style.top = "0";
+      newIframe.style.overflow = "hidden";
+      
+      // Limpiar el contenido previo y agregar el nuevo iframe
+      const playerDiv = document.getElementById('player');
+      playerDiv.innerHTML = ''; // Limpiar el contenido previo
+      playerDiv.appendChild(newIframe); // Agregar el nuevo iframe
+    });
+  </script>
 
 </body>
 </html>
