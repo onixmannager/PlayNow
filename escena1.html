@@ -135,11 +135,10 @@
           setTimeout(() => {
             document.getElementById('overlay').classList.add('hidden');
             
-            // CAMBIO ÚNICO: 30000 → 27000 (27 segundos)
             setTimeout(() => {
               document.getElementById('buttonContainer').style.display = 'flex';
-            }, 27000);
-          }, 1000);
+            }, 30000);
+          }, 500);
         }
       };
 
