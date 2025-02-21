@@ -136,17 +136,21 @@
           videoStarted = true;
           videoPlayer.src = `https://streamable.com/e/tru1pi?autoplay=1&nocontrols=1&mute=${muted ? 1 : 0}`;
           
-          // Esperar a que el video cargue antes de ocultar el overlay
-          videoPlayer.onload = () => {
-            setTimeout(() => {
-              document.getElementById('overlay').classList.add('hidden');
-              
-              // Mostrar botones a los 27 segundos
-              setTimeout(() => {
-                document.getElementById('buttonContainer').style.display = 'flex';
-              }, 27000);
-            }, 500);
-          };
+          // Ocultar overlay después de 500ms
+          setTimeout(() => {
+            document.getElementById('overlay').classList.add('hidden');
+          }, 500);
+
+          // Mostrar botones a los 27 segundos desde que se inicia el video
+          setTimeout(() => {
+            const container = document.getElementById('buttonContainer');
+            container.style.display = 'flex';
+            // Hacer visibles y activables los botones (ya que inician en opacity 0 y sin pointer-events)
+            container.querySelectorAll('button').forEach(btn => {
+              btn.style.opacity = '1';
+              btn.style.pointerEvents = 'auto';
+            });
+          }, 27000);
         }
       };
 
