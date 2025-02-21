@@ -106,43 +106,17 @@
 <button class="loadAnotherButton">Ver Ordenadores</button>
 
 <style>
-  .loadAnotherButton {
-    display: none;  /* Ocultar todos los botones al inicio */
-    padding: 5px 5px;
-    font-size: 14px;
-    cursor: pointer;
-    background: linear-gradient(145deg, #1a1a1a, #2d2d2d);
-    color: #00ff00;
-    border: 2px solid #00ff00;
-    border-radius: 3px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    font-family: Arial, sans-serif;
-    text-shadow: 0 0 8px rgba(0, 255, 0, 0.5);
-    box-shadow: 0 0 10px rgba(0, 255, 0, 0.3),
-                inset 0 0 5px rgba(0, 255, 0, 0.2);
-    transition: all 0.3s ease;
-    margin: 1px;  /* Espaciado entre los botones */
-  }
-
-  .loadAnotherButton:hover {
-    background: linear-gradient(145deg, #2d2d2d, #1a1a1a);
-    box-shadow: 0 0 20px rgba(0, 255, 0, 0.5),
-                inset 0 0 10px rgba(0, 255, 0, 0.3);
-    transform: scale(1.05);
-  }
-
-  .loadAnotherButton:active {
-    transform: scale(0.95);
-  }
-
-  /* Estilo para colocar los botones uno al lado del otro */
+  /* Estilo para colocar los botones en columna vertical al final */
   #buttonContainer {
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
     display: flex;
-    justify-content: center; /* Centra los botones */
+    flex-direction: column;
     align-items: center;
-    gap: 5px;  /* Espacio entre los botones */
-    margin-top: 5px;
+    gap: 15px;  /* Mayor espacio entre botones */
+    z-index: 2;
   }
 </style>
 
