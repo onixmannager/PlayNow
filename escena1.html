@@ -103,7 +103,48 @@
   <button id="playButton">Ayudar a Kilua</button>
 <button class="loadAnotherButton">Abrir Puerta</button>
 <button class="loadAnotherButton">Abrir Rejilla</button>
-<button class="loadAnotherButton" style="display: none;">Ver Ordenadores</button>
+<button class="loadAnotherButton">Ver Ordenadores</button>
+
+<style>
+  .loadAnotherButton {
+    display: none;  /* Ocultar todos los botones al inicio */
+    padding: 8px 16px;
+    font-size: 14px;
+    cursor: pointer;
+    background: linear-gradient(145deg, #1a1a1a, #2d2d2d);
+    color: #00ff00;
+    border: 2px solid #00ff00;
+    border-radius: 3px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-family: Arial, sans-serif;
+    text-shadow: 0 0 8px rgba(0, 255, 0, 0.5);
+    box-shadow: 0 0 10px rgba(0, 255, 0, 0.3),
+                inset 0 0 5px rgba(0, 255, 0, 0.2);
+    transition: all 0.3s ease;
+    margin: 5px;  /* Espaciado entre los botones */
+  }
+
+  .loadAnotherButton:hover {
+    background: linear-gradient(145deg, #2d2d2d, #1a1a1a);
+    box-shadow: 0 0 20px rgba(0, 255, 0, 0.5),
+                inset 0 0 10px rgba(0, 255, 0, 0.3);
+    transform: scale(1.05);
+  }
+
+  .loadAnotherButton:active {
+    transform: scale(0.95);
+  }
+
+  /* Estilo para colocar los botones uno al lado del otro */
+  #buttonContainer {
+    display: flex;
+    justify-content: center; /* Centra los botones */
+    align-items: center;
+    gap: 10px;  /* Espacio entre los botones */
+    margin-top: 20px;
+  }
+</style>
 
 <script>
   document.getElementById("playButton").addEventListener("click", function() {
@@ -118,7 +159,7 @@
         // Mostrar los botones de loadAnotherButton después de 30 segundos
         const loadButtons = document.querySelectorAll('.loadAnotherButton');
         loadButtons.forEach(function(button) {
-          button.style.display = 'block';
+          button.style.display = 'inline-block';  /* Cambia el display a inline-block para que estén uno al lado del otro */
         });
       }, 30000);  // Los botones se mostrarán después de 30 segundos
     }, 500);  // Esto comienza la reproducción del video inmediatamente
@@ -131,5 +172,12 @@
     });
   });
 </script>
+
+<!-- Contenedor para los botones -->
+<div id="buttonContainer">
+  <button class="loadAnotherButton">Abrir Puerta</button>
+  <button class="loadAnotherButton">Abrir Rejilla</button>
+  <button class="loadAnotherButton">Ver Ordenadores</button>
+</div>
 </body>
 </html>
