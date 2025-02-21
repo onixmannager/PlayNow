@@ -69,9 +69,13 @@
         console.error("Error al iniciar el audio:", error);
       });
 
-      // Reproducir el video
+      // Reproducir el video y desactivar su audio
       const videoPlayer = document.getElementById('videoPlayer');
       videoPlayer.src = "https://streamable.com/e/ytg9h7?autoplay=1&loop=0&nocontrols=1"; // Activar autoplay del video
+
+      // Desactivar el audio del video (poner volumen en 0)
+      const iframe = document.querySelector('iframe');
+      iframe.contentWindow.postMessage('{"event":"command","func":"mute","args":""}', '*');
     });
   </script>
 
