@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reproducción Automática</title>
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      width: 100%;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background-color: black;
+    }
+    #player {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+    }
+    #overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 1);
+      z-index: 1;
+    }
+    button {
+      position: absolute;
+      z-index: 2;
+      padding: 12px 25px;
+      font-size: 18px;
+      cursor: pointer;
+      background: linear-gradient(145deg, #1a1a1a, #2d2d2d);
+      color: #00ff00;
+      border: 2px solid #00ff00;
+      border-radius: 3px;
+      left: 50%;
+      transform: translateX(-50%);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      font-family: Arial, sans-serif;
+      text-shadow: 0 0 8px rgba(0, 255, 0, 0.5);
+      box-shadow: 0 0 15px rgba(0, 255, 0, 0.3),
+                  inset 0 0 10px rgba(0, 255, 0, 0.2);
+      transition: all 0.3s ease;
+    }
+    #playButton {
+      top: 50%;
+      animation: glitch 2s infinite;
+    }
+    #loadAnotherButton {
+      bottom: 20px;
+      display: none;
+      background: linear-gradient(145deg, #2d1a1a, #3d2d2d);
+      border-color: #ff0000;
+      color: #ff0000;
+      text-shadow: 0 0 8px rgba(255, 0, 0, 0.5);
+      box-shadow: 0 0 15px rgba(255, 0, 0, 0.3),
+                  inset 0 0 10px rgba(255, 0, 0, 0.2);
+    }
+    button:hover {
+      background: linear-gradient(145deg, #2d2d2d, #1a1a1a);
+      box-shadow: 0 0 25px rgba(0, 255, 0, 0.5),
+                  inset 0 0 15px rgba(0, 255, 0, 0.3);
+      transform: translateX(-50%) scale(1.05);
+    }
+    #loadAnotherButton:hover {
+      box-shadow: 0 0 25px rgba(255, 0, 0, 0.5),
+                  inset 0 0 15px rgba(255, 0, 0, 0.3);
+    }
+    button:active {
+      transform: translateX(-50%) scale(0.95);
+    }
+    @keyframes glitch {
+      0% { transform: translateX(-50%) translateY(0); }
+      20% { transform: translateX(-51%) translateY(2px); }
+      40% { transform: translateX(-49%) translateY(-2px); }
+      60% { transform: translateX(-50.5%) translateY(1px); }
+      80% { transform: translateX(-49.5%) translateY(-1px); }
+      100% { transform: translateX(-50%) translateY(0); }
+    }
+    .hidden {
+      display: none !important;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="overlay"></div>
+
+  <div style="position:relative; width:100%; height:0px; padding-bottom:177.778%"><iframe allow="fullscreen" allowfullscreen height="100%" src="https://streamable.com/e/tru1pi?nocontrols=1" width="100%" style="border:none; width:100%; height:100%; position:absolute; left:0px; top:0px; overflow:hidden;"></iframe></div>
+
+  <button id="playButton">Iniciar Juego</button>
+  <button id="loadAnotherButton">Abrir Puerta</button>
+  <button id="loadAnotherButton">Abrir rejilla</button>
+  <button id="loadAnotherButton">Ver Ordenadores</button>
+
+  <script>
+    document.getElementById("playButton").addEventListener("click", function() {
+      const videoPlayer = document.getElementById('videoPlayer');
+      videoPlayer.src = "https://streamable.com/e/ytg9h7?autoplay=1&loop=0&nocontrols=1";
+    
+      setTimeout(function() {
+        document.getElementById('overlay').classList.add('hidden');
+        document.getElementById('playButton').classList.add('hidden');
+        
+        setTimeout(function() {
+          document.getElementById('loadAnotherButton').style.display = 'block';
+        }, 16500);
+      }, 500);
+    });
+
+    document.getElementById("loadAnotherButton").addEventListener("click", function() {
+      const newIframe = document.createElement('iframe');
+      newIframe.src = "https://www.example.com";
+      newIframe.width = "100%";
+      newIframe.height = "100%";
+      newIframe.style.border = "none";
+      newIframe.style.position = "absolute";
+      newIframe.style.left = "0";
+      newIframe.style.top = "0";
+      newIframe.style.overflow = "hidden";
+      
+      const playerDiv = document.getElementById('player');
+      playerDiv.innerHTML = '';
+      playerDiv.appendChild(newIframe);
+    });
+  </script>
+
+</body>
+</html>
