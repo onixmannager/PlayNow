@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Reproducción Automática</title>
+  <title>Inicio del Juego</title>
   <style>
     body, html {
       margin: 0;
@@ -11,10 +11,6 @@
       height: 100%;
       width: 100%;
       overflow: hidden;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
       background-color: black;
     }
     #player {
@@ -33,101 +29,102 @@
       height: 100%;
       background-color: rgba(0, 0, 0, 1);
       z-index: 1;
+      transition: opacity 0.5s;
     }
-    button {
+    #playButton {
       position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translateX(-50%);
       z-index: 2;
-      padding: 12px 25px;
-      font-size: 18px;
+      padding: 15px 30px;
+      font-size: 20px;
       cursor: pointer;
       background: linear-gradient(145deg, #1a1a1a, #2d2d2d);
       color: #00ff00;
       border: 2px solid #00ff00;
-      border-radius: 3px;
-      left: 50%;
-      transform: translateX(-50%);
+      border-radius: 5px;
       text-transform: uppercase;
-      letter-spacing: 2px;
-      font-family: Arial, sans-serif;
-      text-shadow: 0 0 8px rgba(0, 255, 0, 0.5);
-      box-shadow: 0 0 15px rgba(0, 255, 0, 0.3),
-                  inset 0 0 10px rgba(0, 255, 0, 0.2);
-      transition: all 0.3s ease;
-    }
-    #playButton {
-      top: 50%;
-      animation: glitch 2s infinite;
+      letter-spacing: 3px;
+      text-shadow: 0 0 10px #00ff00;
+      box-shadow: 0 0 20px rgba(0, 255, 0, 0.4);
+      animation: pulse 2s infinite;
     }
     #loadAnotherButton {
-      bottom: 20px;
+      position: absolute;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 2;
       display: none;
+      padding: 12px 25px;
       background: linear-gradient(145deg, #2d1a1a, #3d2d2d);
-      border-color: #ff0000;
+      border: 2px solid #ff0000;
       color: #ff0000;
-      text-shadow: 0 0 8px rgba(255, 0, 0, 0.5);
-      box-shadow: 0 0 15px rgba(255, 0, 0, 0.3),
-                  inset 0 0 10px rgba(255, 0, 0, 0.2);
+      animation: fadeIn 1s forwards;
     }
-    button:hover {
-      background: linear-gradient(145deg, #2d2d2d, #1a1a1a);
-      box-shadow: 0 0 25px rgba(0, 255, 0, 0.5),
-                  inset 0 0 15px rgba(0, 255, 0, 0.3);
-      transform: translateX(-50%) scale(1.05);
+    @keyframes pulse {
+      0% { transform: translateX(-50%) scale(1); }
+      50% { transform: translateX(-50%) scale(1.1); }
+      100% { transform: translateX(-50%) scale(1); }
     }
-    #loadAnotherButton:hover {
-      box-shadow: 0 0 25px rgba(255, 0, 0, 0.5),
-                  inset 0 0 15px rgba(255, 0, 0, 0.3);
-    }
-    button:active {
-      transform: translateX(-50%) scale(0.95);
-    }
-    @keyframes glitch {
-      0% { transform: translateX(-50%) translateY(0); }
-      20% { transform: translateX(-51%) translateY(2px); }
-      40% { transform: translateX(-49%) translateY(-2px); }
-      60% { transform: translateX(-50.5%) translateY(1px); }
-      80% { transform: translateX(-49.5%) translateY(-1px); }
-      100% { transform: translateX(-50%) translateY(0); }
+    @keyframes fadeIn {
+      from { opacity: 0; bottom: 20px; }
+      to { opacity: 1; bottom: 30px; }
     }
     .hidden {
-      display: none !important;
+      opacity: 0 !important;
+      pointer-events: none !important;
     }
   </style>
 </head>
 <body>
-
   <div id="overlay"></div>
-
-  <div id="player" style="position:relative; width:100%; height:100%">
-    <iframe id="videoPlayer" allow="fullscreen;autoplay" allowfullscreen height="100%" 
-            src="https://streamable.com/e/ytg9h7?autoplay=0&loop=0&nocontrols=1" 
-            width="100%" 
-            style="border:none; width:100%; height:100%; position:absolute; left:0; top:0; overflow:hidden;">
+  
+  <div id="player">
+    <iframe id="videoPlayer" 
+            allow="autoplay" 
+            style="border:none; width:100%; height:100%;"
+            src="https://streamable.com/e/ytg9h7?autoplay=0&loop=0&nocontrols=1&mute=1">
     </iframe>
   </div>
 
-  <button id="playButton">Iniciar Juego</button>
-  <button id="loadAnotherButton">Ayudar a Kilua</button>
+  <button id="playButton">INICIAR JUEGO</button>
+  <button id="loadAnotherButton">AYUDAR A KILUA</button>
 
   <script>
-    document.getElementById("playButton").addEventListener("click", function() {
+    document.addEventListener('DOMContentLoaded', () => {
       const videoPlayer = document.getElementById('videoPlayer');
-      videoPlayer.src = "https://streamable.com/e/ytg9h7?autoplay=1&loop=0&nocontrols=1";
-    
-      setTimeout(function() {
+      const playButton = document.getElementById('playButton');
+      const loadButton = document.getElementById('loadAnotherButton');
+      
+      // Función de inicio manual
+      const startExperience = () => {
+        videoPlayer.src = "https://streamable.com/e/ytg9h7?autoplay=1&loop=0&nocontrols=1&mute=0";
         document.getElementById('overlay').classList.add('hidden');
-        document.getElementById('playButton').classList.add('hidden');
+        playButton.classList.add('hidden');
         
-        setTimeout(function() {
-          document.getElementById('loadAnotherButton').style.display = 'block';
-        }, 16500);
-      }, 500);
-    });
+        setTimeout(() => {
+          loadButton.style.display = 'block';
+        }, 27000); // 27 segundos
+      };
 
-    document.getElementById("loadAnotherButton").addEventListener("click", function() {
-      window.location.href = "escena1.html";
+      // Intentar autoplay primero
+      setTimeout(() => {
+        videoPlayer.src = videoPlayer.src.replace('autoplay=0', 'autoplay=1');
+        videoPlayer.muted = true;
+        videoPlayer.play().catch(() => {
+          // Fallback: mostrar botón si falla el autoplay
+          playButton.style.display = 'block';
+        });
+      }, 1000);
+
+      // Eventos
+      playButton.addEventListener('click', startExperience);
+      loadButton.addEventListener('click', () => {
+        window.location.href = "escena1.html";
+      });
     });
   </script>
-
 </body>
 </html>
