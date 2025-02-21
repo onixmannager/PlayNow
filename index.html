@@ -27,14 +27,24 @@
     audio {
       display: none;
     }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      background-color: #444;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      margin-top: 20px;
+    }
   </style>
 </head>
 <body>
 
   <!-- Contenedor para el reproductor de video con autoplay y sin audio -->
   <div style="position:relative; width:100%; height:0px; padding-bottom:177.778%">
-    <iframe allow="fullscreen;autoplay" allowfullscreen height="100%" 
-            src="https://streamable.com/e/ytg9h7?autoplay=1&loop=0&nocontrols=1" 
+    <iframe id="videoPlayer" allow="fullscreen;autoplay" allowfullscreen height="100%" 
+            src="https://streamable.com/e/ytg9h7?autoplay=0&loop=0&nocontrols=1" 
             width="100%" 
             style="border:none; width:100%; height:100%; position:absolute; left:0; top:0; overflow:hidden;">
     </iframe>
@@ -46,20 +56,22 @@
     Tu navegador no soporta el elemento de audio.
   </audio>
 
+  <!-- Botón para iniciar la reproducción del video y el audio -->
+  <button id="playButton">Iniciar Video y Audio</button>
+
   <script>
-    document.addEventListener("DOMContentLoaded", function() {
+    document.getElementById("playButton").addEventListener("click", function() {
+      // Reproducir el audio
       const audio = document.getElementById('audio');
-      const video = document.querySelector('iframe'); // Seleccionamos el iframe del video
-      
-      // Intentamos reproducir el audio cuando se cargue la página
       audio.play().then(() => {
-        console.log("Audio iniciado automáticamente.");
+        console.log("Audio iniciado.");
       }).catch((error) => {
-        console.error("El navegador ha bloqueado el auto-play del audio:", error);
+        console.error("Error al iniciar el audio:", error);
       });
 
-      // Aseguramos que el video también se reproduzca automáticamente
-      video.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
+      // Reproducir el video
+      const videoPlayer = document.getElementById('videoPlayer');
+      videoPlayer.src = "https://streamable.com/e/ytg9h7?autoplay=1&loop=0&nocontrols=1"; // Activar autoplay del video
     });
   </script>
 
