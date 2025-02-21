@@ -58,6 +58,15 @@
       });
     });
   </script>
+<script>
+  document.addEventListener("click", function () {
+    let audio = document.getElementById('audio');
+    if (audio.paused) {
+        audio.play().catch(error => console.log("Error al reproducir:", error));
+    }
+}, { once: true }); // Se ejecuta solo una vez
+
+  </script>
 
 </body>
 </html>
