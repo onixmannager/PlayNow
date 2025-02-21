@@ -125,19 +125,7 @@
     });
 
     document.getElementById("loadAnotherButton").addEventListener("click", function() {
-      const newIframe = document.createElement('iframe');
-      newIframe.src = "escena1.html";
-      newIframe.width = "100%";
-      newIframe.height = "100%";
-      newIframe.style.border = "none";
-      newIframe.style.position = "absolute";
-      newIframe.style.left = "0";
-      newIframe.style.top = "0";
-      newIframe.style.overflow = "hidden";
-      
-      const playerDiv = document.getElementById('player');
-      playerDiv.innerHTML = '';
-      playerDiv.appendChild(newIframe);
+      window.location.href = "escena1.html";
     });
   </script>
 
