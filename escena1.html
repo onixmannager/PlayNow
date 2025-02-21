@@ -79,6 +79,9 @@
       display: none;
       z-index: 2;
       gap: 20px;
+      flex-wrap: wrap;
+      justify-content: center;
+      max-width: 90%;
     }
     .loadAnotherButton {
       background: linear-gradient(145deg, #1a1a1a, #2d2d2d);
@@ -93,6 +96,43 @@
     }
     .loadAnotherButton:active {
       transform: scale(0.95);
+    }
+
+    /* Media Queries para móviles */
+    @media (max-width: 768px) {
+      button {
+        padding: 10px 15px;
+        font-size: 14px;
+        margin: 5px;
+        width: 100%;
+        max-width: 280px;
+      }
+      
+      #buttonContainer {
+        bottom: 20px;
+        gap: 10px;
+        flex-direction: column;
+      }
+      
+      #playButton {
+        width: 80%;
+        max-width: 250px;
+        white-space: nowrap;
+        padding: 12px 10px;
+        font-size: 16px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      button {
+        font-size: 13px;
+        letter-spacing: 1px;
+        padding: 8px 12px;
+      }
+      
+      #buttonContainer {
+        bottom: 10px;
+      }
     }
   </style>
 </head>
