@@ -68,15 +68,17 @@
   <button id="playButton">Iniciar Video</button>
 
   <script>
-    document.getElementById("playButton").addEventListener("click", function() {
-      const videoPlayer = document.getElementById('videoPlayer');
-      videoPlayer.src = "https://streamable.com/e/ytg9h7?autoplay=1&loop=0&nocontrols=1";
-      
-      // Ocultar ambos elementos
+  document.getElementById("playButton").addEventListener("click", function() {
+    const videoPlayer = document.getElementById('videoPlayer');
+    videoPlayer.src = "https://streamable.com/e/ytg9h7?autoplay=1&loop=0&nocontrols=1";
+    
+    // Retrasar la ocultación de ambos elementos
+    setTimeout(function() {
       document.getElementById('overlay').classList.add('hidden');
       document.getElementById('playButton').classList.add('hidden');
-    });
-  </script>
+    }, 500); // 500 milisegundos = 0.5 segundos
+  });
+</script>
 
 </body>
 </html>
