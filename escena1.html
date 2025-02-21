@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Historia Interactiva</title>
   <style>
+    /* Todos los estilos se mantienen igual */
     body, html {
       margin: 0;
       padding: 0;
@@ -99,6 +100,9 @@
         bottom: 10px;
       }
     }
+    .hidden {
+      display: none !important;
+    }
   </style>
 </head>
 <body>
@@ -132,13 +136,17 @@
           videoStarted = true;
           videoPlayer.src = `https://streamable.com/e/tru1pi?autoplay=1&nocontrols=1&mute=${muted ? 1 : 0}`;
           
-          setTimeout(() => {
-            document.getElementById('overlay').classList.add('hidden');
-            
+          // Esperar a que el video cargue antes de ocultar el overlay
+          videoPlayer.onload = () => {
             setTimeout(() => {
-              document.getElementById('buttonContainer').style.display = 'flex';
-            }, 30000);
-          }, 500);
+              document.getElementById('overlay').classList.add('hidden');
+              
+              // Mostrar botones a los 27 segundos
+              setTimeout(() => {
+                document.getElementById('buttonContainer').style.display = 'flex';
+              }, 27000);
+            }, 500);
+          };
         }
       };
 
