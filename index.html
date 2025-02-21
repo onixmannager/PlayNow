@@ -1,75 +1,75 @@
-<!DOCTYPE html>  <html lang="es">  
-<head>  
-    <meta charset="UTF-8">  
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">  
-    <title>Reproducción de Video y Audio Sincronizados</title>  <!-- Favicon -->  
-<link rel="icon" type="image/x-icon" href="favicon.ico">  
+<!DOCTYPE html><html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reproducción de Video y Audio Sincronizados</title><!-- Favicon -->
+<link rel="icon" type="image/x-icon" href="favicon.ico">
 
-<!-- Meta etiquetas para Open Graph -->  
-<meta property="og:title" content="Onix Manager - Plataforma de Educacion Cripto.">  
-<meta property="og:description" content="Plataforma De Educación Cripto En Linea.">  
-<meta property="og:image" content="https://raw.githubusercontent.com/onixmannager/Landingpage/main/logoonixmanager%20(2).png">  
-<meta property="og:url" content="https://onixmannager.github.io/Landingpage/">  
-<meta property="og:type" content="website">  
+<!-- Meta etiquetas para Open Graph -->
+<meta property="og:title" content="Onix Manager - Plataforma de Educacion Cripto.">
+<meta property="og:description" content="Plataforma De Educación Cripto En Linea.">
+<meta property="og:image" content="https://raw.githubusercontent.com/onixmannager/Landingpage/main/logoonixmanager%20(2).png">
+<meta property="og:url" content="https://onixmannager.github.io/Landingpage/">
+<meta property="og:type" content="website">
 
-<!-- Meta etiquetas para Twitter Card -->  
-<meta name="twitter:card" content="summary_large_image">  
-<meta name="twitter:title" content="Onix Manager - Asesoría Digital y Financiera">  
-<meta name="twitter:description" content="Plataforma De Educación Cripto En Linea.">  
-<meta name="twitter:image" content="https://raw.githubusercontent.com/onixmannager/Landingpage/main/logoonixmanager%20(2).png">  
+<!-- Meta etiquetas para Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Onix Manager - Asesoría Digital y Financiera">
+<meta name="twitter:description" content="Plataforma De Educación Cripto En Linea.">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/onixmannager/Landingpage/main/logoonixmanager%20(2).png">
 
-<style>  
-    body, html {  
-        margin: 0;  
-        padding: 0;  
-        height: 100%;  
-        width: 100%;  
-        overflow: hidden;  
-        display: flex;  
-        flex-direction: column;  
-        align-items: center;  
-        justify-content: center;  
-        background-color: black;  
-        position: relative;  
-    }  
-    #player {  
-        position: absolute;  
-        top: 0;  
-        left: 0;  
-        width: 100%;  
-        height: 100%;  
-    }  
-    audio {  
-        display: none;  
-    }  
+<style>
+    body, html {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        width: 100%;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background-color: black;
+        position: relative;
+    }
+    #player {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+    audio {
+        display: none;
+    }
 </style>
 
-</head>  
-<body>  <!-- Contenedor para el reproductor de video -->  
-<div style="position:relative; width:100%; height:0px; padding-bottom:177.778%">  
-    <iframe allow="fullscreen;autoplay" allowfullscreen height="100%" src="https://streamable.com/e/ytg9h7?autoplay=1&nocontrols=1" width="100%" style="border:none; width:100%; height:100%; position:absolute; left:0px; top:0px; overflow:hidden;"></iframe>  
-</div>  
+</head>
+<body><!-- Contenedor para el reproductor de video -->
+<div style="position:relative; width:100%; height:0px; padding-bottom:177.778%">
+    <iframe allow="fullscreen;autoplay" allowfullscreen height="100%" src="https://streamable.com/e/ytg9h7?autoplay=1&nocontrols=1" width="100%" style="border:none; width:100%; height:100%; position:absolute; left:0px; top:0px; overflow:hidden;"></iframe>
+</div>
 
-<!-- Contenedor para el audio -->  
-<audio id="audio" preload="auto">  
-    <source src="https://raw.githubusercontent.com/tuusuario/tu-repo/main/tu-audio.mp3" type="audio/mp3">  
-    Tu navegador no soporta el elemento de audio.  
-</audio>  
+<!-- Contenedor para el audio -->
+<audio id="audio" preload="auto">
+    <source src="https://raw.githubusercontent.com/tuusuario/tu-repo/main/tu-audio.mp3" type="audio/mp3">
+    Tu navegador no soporta el elemento de audio.
+</audio>
 
-<script>  
-    // Cargar el audio desde GitHub y reproducirlo  
-    var audio = document.getElementById('audio');  
+<script>
+    // Cargar el audio desde GitHub y reproducirlo
+    var audio = document.getElementById('audio');
 
-    // Función para sincronizar audio y video  
-    function playMedia() {  
-        audio.play();  // Reproduce el audio  
-    }  
+    // Función para sincronizar audio y video
+    function playMedia() {
+        audio.play();  // Reproduce el audio
+    }
 
-    // Reproducir el audio y video cuando la página cargue  
-    window.onload = function() {  
-        playMedia();  
-    };  
+    // Reproducir el audio y video cuando la página cargue
+    window.onload = function() {
+        playMedia();
+    };
 </script>
 
-</body>  
+</body>
 </html>
