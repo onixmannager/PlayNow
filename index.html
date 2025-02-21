@@ -49,23 +49,18 @@
   <script>
     document.addEventListener("DOMContentLoaded", function() {
       const audio = document.getElementById('audio');
+      const video = document.querySelector('iframe'); // Seleccionamos el iframe del video
       
-      // Intentar reproducir el audio al cargar la página
+      // Intentamos reproducir el audio cuando se cargue la página
       audio.play().then(() => {
         console.log("Audio iniciado automáticamente.");
       }).catch((error) => {
         console.error("El navegador ha bloqueado el auto-play del audio:", error);
       });
-    });
-  </script>
-<script>
-  document.addEventListener("click", function () {
-    let audio = document.getElementById('audio');
-    if (audio.paused) {
-        audio.play().catch(error => console.log("Error al reproducir:", error));
-    }
-}, { once: true }); // Se ejecuta solo una vez
 
+      // Aseguramos que el video también se reproduzca automáticamente
+      video.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
+    });
   </script>
 
 </body>
