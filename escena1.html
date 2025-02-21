@@ -103,7 +103,7 @@
   <button id="playButton">Ayudar a Kilua</button>
 <button class="loadAnotherButton">Abrir Puerta</button>
 <button class="loadAnotherButton">Abrir Rejilla</button>
-<button class="loadAnotherButton">Ver Ordenadores</button>
+<button class="loadAnotherButton" style="display: none;">Ver Ordenadores</button>
 
 <script>
   document.getElementById("playButton").addEventListener("click", function() {
@@ -120,8 +120,8 @@
         loadButtons.forEach(function(button) {
           button.style.display = 'block';
         });
-      }, 28000);
-    }, 500);
+      }, 30000);  // Los botones se mostrarán después de 30 segundos
+    }, 500);  // Esto comienza la reproducción del video inmediatamente
   });
 
   // Añadir el comportamiento de los botones de carga
