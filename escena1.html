@@ -52,24 +52,8 @@
                   inset 0 0 10px rgba(0, 255, 0, 0.2);
       transition: all 0.3s ease;
       margin: 0 10px;
-    }
-    #playButton {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translateX(-50%);
-      animation: glitch 2s infinite;
-    }
-    @keyframes glitch {
-      0% { transform: translateX(-50%) translateY(0); }
-      20% { transform: translateX(-51%) translateY(2px); }
-      40% { transform: translateX(-49%) translateY(-2px); }
-      60% { transform: translateX(-50.5%) translateY(1px); }
-      80% { transform: translateX(-49.5%) translateY(-1px); }
-      100% { transform: translateX(-50%) translateY(0); }
-    }
-    .hidden {
-      display: none !important;
+      opacity: 0;
+      pointer-events: none;
     }
     #buttonContainer {
       position: absolute;
@@ -84,12 +68,6 @@
       max-width: 90%;
     }
     #unmuteButton {
-      position: absolute;
-      bottom: 100px;
-      left: 50%;
-      transform: translateX(-50%);
-      z-index: 3;
-      display: none;
       background: linear-gradient(145deg, #2d1a1a, #3d2d2d);
       border-color: #ff0000;
       color: #ff0000;
@@ -110,16 +88,6 @@
         gap: 10px;
         flex-direction: column;
       }
-      #playButton {
-        width: 80%;
-        max-width: 250px;
-        white-space: nowrap;
-        padding: 12px 10px;
-        font-size: 16px;
-      }
-      #unmuteButton {
-        bottom: 80px;
-      }
     }
     @media (max-width: 480px) {
       button {
@@ -130,9 +98,6 @@
       #buttonContainer {
         bottom: 10px;
       }
-      #unmuteButton {
-        bottom: 60px;
-      }
     }
   </style>
 </head>
@@ -140,7 +105,6 @@
   <div id="overlay"></div>
   <div id="player">
     <iframe id="videoPlayer" allow="autoplay" allowfullscreen height="100%" 
-            src="https://streamable.com/e/tru1pi?nocontrols=1&mute=1" 
             width="100%" 
             style="border:none; width:100%; height:100%; position:absolute; left:0; top:0; overflow:hidden;">
     </iframe>
@@ -160,46 +124,44 @@
       const playButton = document.getElementById('playButton');
       const unmuteButton = document.getElementById('unmuteButton');
       const videoPlayer = document.getElementById('videoPlayer');
-      let userInteracted = false;
+      let videoStarted = false;
 
-      // Configuración inicial silenciada
-      videoPlayer.src = "https://streamable.com/e/tru1pi?autoplay=1&nocontrols=1&mute=1";
+      // Función para iniciar video
+      const startVideo = (muted = true) => {
+        if(!videoStarted) {
+          videoStarted = true;
+          videoPlayer.src = `https://streamable.com/e/tru1pi?autoplay=1&nocontrols=1&mute=${muted ? 1 : 0}`;
+          
+          setTimeout(() => {
+            document.getElementById('overlay').classList.add('hidden');
+            
+            setTimeout(() => {
+              document.getElementById('buttonContainer').style.display = 'flex';
+            }, 30000);
+          }, 500);
+        }
+      };
 
-      // Mostrar botón de unmute después de 2 segundos
+      // Autoejecución segura
       setTimeout(() => {
-        unmuteButton.style.display = 'block';
-      }, 2000);
+        startVideo(true);
+        playButton.style.display = 'none';
+      }, 1000);
 
-      // Manejar interacción de usuario para sonido
+      // Manejar activación de sonido
       const enableSound = () => {
-        if (!userInteracted) {
-          userInteracted = true;
-          videoPlayer.src = videoPlayer.src.replace('&mute=1', '');
+        if(videoStarted) {
+          videoPlayer.src = videoPlayer.src.replace('&mute=1', '&mute=0');
           unmuteButton.style.display = 'none';
         }
       };
 
-      // Eventos para activar sonido
-      document.body.addEventListener('click', enableSound);
-      unmuteButton.addEventListener('click', enableSound);
-
-      // Autoejecución del botón principal
-      setTimeout(() => {
-        playButton.click();
-        playButton.style.opacity = '0';
-        playButton.style.pointerEvents = 'none';
-      }, 1000);
-
-      // Control del reproductor
-      playButton.addEventListener("click", function() {
-        setTimeout(() => {
-          document.getElementById('overlay').classList.add('hidden');
-          
-          setTimeout(() => {
-            document.getElementById('buttonContainer').style.display = 'flex';
-          }, 30000);
-        }, 500);
+      // Eventos de interacción
+      document.body.addEventListener('click', () => {
+        if(!videoStarted) startVideo(true);
       });
+
+      unmuteButton.addEventListener('click', enableSound);
 
       // Control de botones de opciones
       document.querySelectorAll(".loadAnotherButton").forEach(button => {
