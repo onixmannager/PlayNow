@@ -1,9 +1,11 @@
-<!DOCTYPE html><html lang="es">
+<!DOCTYPE html>
+<html lang="es">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Reproducción Automática</title>
+  <title>Historia Interactiva</title>
   <style>
+    /* Todos los estilos se mantienen igual */
     body, html {
       margin: 0;
       padding: 0;
@@ -34,7 +36,7 @@
       z-index: 1;
     }
     button {
-      position: absolute;
+      position: relative;
       z-index: 2;
       padding: 12px 25px;
       font-size: 18px;
@@ -43,8 +45,6 @@
       color: #00ff00;
       border: 2px solid #00ff00;
       border-radius: 3px;
-      left: 50%;
-      transform: translateX(-50%);
       text-transform: uppercase;
       letter-spacing: 2px;
       font-family: Arial, sans-serif;
@@ -52,14 +52,23 @@
       box-shadow: 0 0 15px rgba(0, 255, 0, 0.3),
                   inset 0 0 10px rgba(0, 255, 0, 0.2);
       transition: all 0.3s ease;
+      margin: 0 10px;
+      opacity: 0;
+      pointer-events: none;
     }
-    #playButton {
-      top: 50%;
-      animation: glitch 2s infinite;
-    }
-    #loadAnotherButton {
-      bottom: 20px;
+    #buttonContainer {
+      position: absolute;
+      bottom: 50px;
+      left: 50%;
+      transform: translateX(-50%);
       display: none;
+      z-index: 2;
+      gap: 20px;
+      flex-wrap: wrap;
+      justify-content: center;
+      max-width: 90%;
+    }
+    #unmuteButton {
       background: linear-gradient(145deg, #2d1a1a, #3d2d2d);
       border-color: #ff0000;
       color: #ff0000;
@@ -67,26 +76,29 @@
       box-shadow: 0 0 15px rgba(255, 0, 0, 0.3),
                   inset 0 0 10px rgba(255, 0, 0, 0.2);
     }
-    button:hover {
-      background: linear-gradient(145deg, #2d2d2d, #1a1a1a);
-      box-shadow: 0 0 25px rgba(0, 255, 0, 0.5),
-                  inset 0 0 15px rgba(0, 255, 0, 0.3);
-      transform: translateX(-50%) scale(1.05);
+    @media (max-width: 768px) {
+      button {
+        padding: 10px 15px;
+        font-size: 14px;
+        margin: 5px;
+        width: 100%;
+        max-width: 280px;
+      }
+      #buttonContainer {
+        bottom: 20px;
+        gap: 10px;
+        flex-direction: column;
+      }
     }
-    #loadAnotherButton:hover {
-      box-shadow: 0 0 25px rgba(255, 0, 0, 0.5),
-                  inset 0 0 15px rgba(255, 0, 0, 0.3);
-    }
-    button:active {
-      transform: translateX(-50%) scale(0.95);
-    }
-    @keyframes glitch {
-      0% { transform: translateX(-50%) translateY(0); }
-      20% { transform: translateX(-51%) translateY(2px); }
-      40% { transform: translateX(-49%) translateY(-2px); }
-      60% { transform: translateX(-50.5%) translateY(1px); }
-      80% { transform: translateX(-49.5%) translateY(-1px); }
-      100% { transform: translateX(-50%) translateY(0); }
+    @media (max-width: 480px) {
+      button {
+        font-size: 13px;
+        letter-spacing: 1px;
+        padding: 8px 12px;
+      }
+      #buttonContainer {
+        bottom: 10px;
+      }
     }
     .hidden {
       display: none !important;
