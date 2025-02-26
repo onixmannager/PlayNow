@@ -13,13 +13,23 @@
             font-family: 'Arial', sans-serif;
         }
         .fullscreen-bg {
-            background-image: url('index.jpg'); /* Cambia 'fondo.jpg' por la ruta de tu imagen */
-            background-size: cover;
-            background-position: center;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
             height: 100%;
             display: flex;
             justify-content: center;
             align-items: center;
+            overflow: hidden;
+        }
+        .fullscreen-bg video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: absolute;
+            top: 0;
+            left: 0;
         }
         .btn {
             padding: 8px 16px; /* Hacer el botón más pequeño */
@@ -75,6 +85,12 @@
 </head>
 <body>
     <div class="fullscreen-bg">
+        <!-- Video de Streamable -->
+        <video autoplay muted loop>
+            <source src="https://streamable.com/path/to/your/video.mp4" type="video/mp4">
+            Tu navegador no soporta el formato de video.
+        </video>
+
         <button class="btn" onclick="window.location.href='capitulos.html'">Capitulos</button>
     </div>
 </body>
