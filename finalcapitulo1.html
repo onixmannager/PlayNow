@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Capítulo 1 Completado</title>
+    <script>
+        // Marcar el capítulo 1 como completado
+        localStorage.setItem('capitulo1_completado', 'true');
+        // Redirigir a la página de capítulos después de 2 segundos
+        setTimeout(() => {
+            window.location.href = 'capitulos.html';
+        }, 2000);
+    </script>
+</head>
+<body>
+    <h1>¡Capítulo 1 Completado!</h1>
+    <p>Redirigiendo a la página de capítulos...</p>
+</body>
+</html>
