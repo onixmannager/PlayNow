@@ -60,28 +60,34 @@
       display: none; /* Botón completamente oculto */
     }
     #loadAnotherButton {
-      bottom: 20px;
-      display: none;
-      background: linear-gradient(145deg, #2d1a1a, #3d2d2d);
-      border-color: #ff0000;
-      color: #ff0000;
-      text-shadow: 0 0 8px rgba(255, 0, 0, 0.5);
-      box-shadow: 0 0 15px rgba(255, 0, 0, 0.3),
-                  inset 0 0 10px rgba(255, 0, 0, 0.2);
-    }
-    button:hover {
-      background: linear-gradient(145deg, #2d2d2d, #1a1a1a);
-      box-shadow: 0 0 25px rgba(0, 255, 0, 0.5),
-                  inset 0 0 15px rgba(0, 255, 0, 0.3);
-      transform: translateX(-50%) scale(1.05);
-    }
-    #loadAnotherButton:hover {
-      box-shadow: 0 0 25px rgba(255, 0, 0, 0.5),
-                  inset 0 0 15px rgba(255, 0, 0, 0.3);
-    }
-    button:active {
-      transform: translateX(-50%) scale(0.95);
-    }
+  bottom: 20px;
+  display: none;
+  padding: 8px 18px; /* Botón más pequeño */
+  font-size: 14px; /* Letra más pequeña */
+  cursor: pointer;
+  background: linear-gradient(145deg, #003300, #005500); /* Verde oscuro */
+  border: 2px solid #00ff00; /* Verde neón */
+  color: #00ff00; /* Texto verde neón */
+  border-radius: 5px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-family: Arial, sans-serif;
+  text-shadow: 0 0 8px rgba(0, 255, 0, 0.8); /* Resplandor verde */
+  box-shadow: 0 0 15px rgba(0, 255, 0, 0.5),
+              inset 0 0 10px rgba(0, 255, 0, 0.3);
+  transition: all 0.3s ease;
+}
+
+#loadAnotherButton:hover {
+  background: linear-gradient(145deg, #005500, #007700);
+  box-shadow: 0 0 25px rgba(0, 255, 0, 1),
+              inset 0 0 15px rgba(0, 255, 0, 0.5);
+  transform: translateX(-50%) scale(1.05);
+}
+
+#loadAnotherButton:active {
+  transform: translateX(-50%) scale(0.95);
+}
     @keyframes glitch {
       0% { transform: translateX(-50%) translateY(0); }
       20% { transform: translateX(-51%) translateY(2px); }
