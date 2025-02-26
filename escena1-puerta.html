@@ -149,6 +149,11 @@
       font-family: Arial, sans-serif;
       text-shadow: 0 0 8px rgba(0,255,0,0.5);
     }
+    /* Sobrescribir estilos globales para que se vea el botón dentro del modal */
+    #codigoModal button {
+      opacity: 1 !important;
+      pointer-events: auto !important;
+    }
   </style>
 </head>
 <body>
@@ -243,7 +248,7 @@
         });
       });
 
-      // Manejar el botón de aceptar en el pop-up
+      // Botón de Aceptar dentro del pop-up (sin modificar el resto de funciones)
       document.getElementById('codigoAceptar').addEventListener('click', function() {
         const code = document.getElementById('codigoInput').value;
         if(code.length === 4) {
