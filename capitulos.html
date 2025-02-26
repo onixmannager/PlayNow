@@ -3,54 +3,79 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Capítulos</title>
+    <title>Capítulos del Juego</title>
     <style>
         body, html {
             margin: 0;
             padding: 0;
             height: 100%;
-            font-family: Arial, sans-serif;
+            font-family: 'Arial', sans-serif;
+            background-color: #000;
         }
         .chapter {
             width: 100%;
-            height: 20%;
-            position: relative; /* Para posicionar el texto */
-            border-bottom: 1px solid #ccc;
+            height: 20vh;
+            position: relative;
+            border-bottom: 2px solid #2a2a2a;
             cursor: pointer;
+            overflow: hidden;
         }
         .chapter img {
             width: 100%;
             height: 100%;
             object-fit: cover;
+            transition: all 0.3s ease;
         }
         .chapter-info {
             position: absolute;
             bottom: 0;
             left: 0;
             width: 100%;
-            padding: 15px 20px;
-            background: linear-gradient(transparent, rgba(0,0,0,0.7));
-            color: white;
+            padding: 12px 20px;
+            background: linear-gradient(transparent, rgba(0,0,0,0.8));
+            color: #fff;
             box-sizing: border-box;
+            z-index: 2;
         }
         .chapter-title {
-            font-size: 1.5em;
+            font-size: 1.4em;
             font-weight: bold;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
         }
         .chapter-name {
-            font-size: 1.1em;
-            margin-top: 5px;
+            font-size: 1em;
+            margin-top: 3px;
+            opacity: 0.9;
         }
         .locked {
-            filter: grayscale(100%);
             pointer-events: none;
+        }
+        .locked img {
+            filter: grayscale(100%) brightness(30%);
+        }
+        .locked::after {
+            content: "BLOQUEADO";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 1.8em;
+            font-weight: bold;
+            color: #ff0000;
+            text-shadow: 0 0 15px rgba(255,0,0,0.7);
+            z-index: 3;
+            animation: bloqueado 2s infinite;
+        }
+        @keyframes bloqueado {
+            0% { opacity: 0.7; }
+            50% { opacity: 1; }
+            100% { opacity: 0.7; }
         }
     </style>
 </head>
 <body>
-    <!-- Capítulo 1 -->
-    <div id="chapter1" class="chapter" onclick="window.location.href='capitulo1.html'">
+    <!-- Capítulo 1 - Siempre desbloqueado -->
+    <div class="chapter" onclick="window.location.href='capitulo1.html'">
         <img src="capitulo1.jpg" alt="Capítulo 1">
         <div class="chapter-info">
             <div class="chapter-title">Capítulo 1</div>
@@ -58,57 +83,60 @@
         </div>
     </div>
 
-    <!-- Capítulo 2 -->
-    <div id="chapter2" class="chapter locked" onclick="window.location.href='capitulo2.html'">
+    <!-- Capítulos bloqueados inicialmente -->
+    <div class="chapter locked" id="chapter2">
         <img src="capitulo2.jpg" alt="Capítulo 2">
         <div class="chapter-info">
             <div class="chapter-title">Capítulo 2</div>
-            <div class="chapter-name">El bosque oscuro</div>
+            <div class="chapter-name">El bosque prohibido</div>
         </div>
     </div>
 
-    <!-- Capítulo 3 -->
-    <div id="chapter3" class="chapter locked" onclick="window.location.href='capitulo3.html'">
+    <div class="chapter locked" id="chapter3">
         <img src="capitulo3.jpg" alt="Capítulo 3">
         <div class="chapter-info">
             <div class="chapter-title">Capítulo 3</div>
-            <div class="chapter-name">La fortaleza olvidada</div>
+            <div class="chapter-name">La fortaleza oscura</div>
         </div>
     </div>
 
-    <!-- Capítulo 4 -->
-    <div id="chapter4" class="chapter locked" onclick="window.location.href='capitulo4.html'">
+    <div class="chapter locked" id="chapter4">
         <img src="capitulo4.jpg" alt="Capítulo 4">
         <div class="chapter-info">
             <div class="chapter-title">Capítulo 4</div>
-            <div class="chapter-name">El abismo cósmico</div>
+            <div class="chapter-name">El abismo final</div>
         </div>
     </div>
 
-    <!-- Capítulo 5 -->
-    <div id="chapter5" class="chapter locked" onclick="window.location.href='capitulo5.html'">
+    <div class="chapter locked" id="chapter5">
         <img src="capitulo5.jpg" alt="Capítulo 5">
         <div class="chapter-info">
             <div class="chapter-title">Capítulo 5</div>
-            <div class="chapter-name">El destino final</div>
+            <div class="chapter-name">Destino final</div>
         </div>
     </div>
 
     <script>
-        // Función para desbloquear capítulos
-        function unlockChapter(chapterNumber) {
-            const chapter = document.getElementById(`chapter${chapterNumber}`);
-            if (chapter) {
-                chapter.classList.remove('locked');
-                chapter.style.pointerEvents = 'auto';
-            }
-        }
+        // Sistema de desbloqueo mejorado
+        const checkProgress = () => {
+            // Solo capítulo 2-5 verifican progreso
+            if(localStorage.getItem('capitulo1_completado')) unlock(2);
+            if(localStorage.getItem('capitulo2_completado')) unlock(3);
+            if(localStorage.getItem('capitulo3_completado')) unlock(4);
+            if(localStorage.getItem('capitulo4_completado')) unlock(5);
+        };
 
-        // Verificar el estado de los capítulos
-        if (localStorage.getItem('capitulo1_completado')) unlockChapter(2);
-        if (localStorage.getItem('capitulo2_completado')) unlockChapter(3);
-        if (localStorage.getItem('capitulo3_completado')) unlockChapter(4);
-        if (localStorage.getItem('capitulo4_completado')) unlockChapter(5);
+        const unlock = (num) => {
+            const cap = document.getElementById(`chapter${num}`);
+            if(!cap) return;
+            
+            cap.classList.remove('locked');
+            cap.style.pointerEvents = 'auto';
+            cap.onclick = () => window.location.href = `capitulo${num}.html`;
+        };
+
+        // Ejecutar al cargar
+        checkProgress();
     </script>
 </body>
 </html>
