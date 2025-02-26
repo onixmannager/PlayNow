@@ -1,4 +1,6 @@
-<!DOCTYPE html><html lang="es"><head>
+<!DOCTYPE html>
+<html lang="es">
+<head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Reproducción Automática</title>
@@ -24,6 +26,17 @@
       z-index: 0;
     }
     
+    /* Capa transparente para bloquear interacción con el video */
+    #overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      pointer-events: auto;
+    }
+
     button {
       position: absolute;
       z-index: 2;
@@ -47,6 +60,9 @@
     #playButton {
       top: 50%;
       animation: glitch 2s infinite;
+      /* Ocultar botón inicialmente */
+      opacity: 0;
+      pointer-events: none;
     }
     #loadAnotherButton {
       bottom: 20px;
@@ -85,9 +101,6 @@
   </style>
 </head>
 <body>  
-
-    
-  </div> 
   <div id="player" style="position:relative; width:100%; height:100%">
     <iframe id="videoPlayer" 
         allow="fullscreen; autoplay; encrypted-media; picture-in-picture" 
@@ -96,9 +109,11 @@
         src="https://streamable.com/e/ytg9h7?autoplay=1&loop=0&nocontrols=1" 
         width="100%" 
         style="border:none; width:100%; height:100%; position:absolute; left:0; top:0; overflow:hidden;">
-</iframe>
+    </iframe>
+    <div id="overlay"></div>
   </div>
-    <button id="playButton">Iniciar Juego</button>
+  
+  <button id="playButton">Iniciar Juego</button>
   <button id="loadAnotherButton">Ayudar a Kilua</button>  
   
   <script>
