@@ -26,7 +26,6 @@
       z-index: 0;
     }
     
-    /* Capa transparente para bloquear interacción con el video */
     #overlay {
       position: absolute;
       top: 0;
@@ -58,11 +57,7 @@
       transition: all 0.3s ease;
     }
     #playButton {
-      top: 50%;
-      animation: glitch 2s infinite;
-      /* Ocultar botón inicialmente */
-      opacity: 0;
-      pointer-events: none;
+      display: none; /* Botón completamente oculto */
     }
     #loadAnotherButton {
       bottom: 20px;
@@ -117,12 +112,17 @@
   <button id="loadAnotherButton">Ayudar a Kilua</button>  
   
   <script>
+    // Automatización del flujo
+    window.addEventListener('load', function() {
+      // Simular clic en el botón oculto
+      document.getElementById('playButton').click();
+    });
+
     document.getElementById("playButton").addEventListener("click", function() {
       const videoPlayer = document.getElementById('videoPlayer');
       videoPlayer.src = "https://streamable.com/e/ytg9h7?autoplay=1&loop=0&nocontrols=1";
     
       setTimeout(function() {
-        document.getElementById('overlay').classList.add('hidden');
         document.getElementById('playButton').classList.add('hidden');
         
         setTimeout(function() {
