@@ -119,7 +119,7 @@
   
   <div id="buttonContainer">
     
-    <button class="loadAnotherButton" data-url="escena1-rejilla.html">Empezar</button>
+    <button class="loadAnotherButton" data-url="capitulos.html">Empezar</button>
   </div>
 
   <script>
@@ -133,7 +133,7 @@
       const startVideo = (muted = true) => {
         if(!videoStarted) {
           videoStarted = true;
-          videoPlayer.src = `https://streamable.com/e/jw5umt?autoplay=1&nocontrols=1&mute=${muted ? 1 : 0}`;
+          videoPlayer.src = `https://streamable.com/e/l24w63?autoplay=1&nocontrols=1&mute=${muted ? 1 : 0}`;
           
           // Ocultar overlay después de 500ms
           setTimeout(() => {
@@ -149,7 +149,7 @@
               btn.style.opacity = '1';
               btn.style.pointerEvents = 'auto';
             });
-          }, 18000);
+          }, 3000);
         }
       };
 
