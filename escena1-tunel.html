@@ -310,15 +310,14 @@
   
       // Botón de Aceptar dentro del pop-up (sin modificar el resto de funciones)  
       document.getElementById('codigoAceptar').addEventListener('click', function() {  
-  const code = document.getElementById('codigoInput').value;  
-  if (code.length === 4) {  
-    // Aquí debes añadir la acción que se ejecutará si el código tiene 4 cifras.
-    console.log("Código aceptado:", code);
-  } else {  
-    alert("Por favor, introduce un código de 4 cifras.");  
-  }  
-});
+        const code = document.getElementById('codigoInput').value;  
+        if(code.length === 4) {  
+          window.location.href = "gameover1.html";  
+        } else {  
+          alert("Por favor, introduce un código de 4 cifras.");  
+        }  
+      });  
+    });  
   </script>  
-
 </body>  
 </html>
