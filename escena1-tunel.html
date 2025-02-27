@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Historia Interactiva</title>
   <style>
-    /* Estilos generales */
+    /* Todos los estilos se mantienen igual */
     body, html {
       margin: 0;
       padding: 0;
@@ -149,55 +149,114 @@
       font-family: Arial, sans-serif;
       text-shadow: 0 0 8px rgba(0,255,0,0.5);
     }
+    /* Sobrescribir estilos globales para que se vea el botón dentro del modal */
+    #codigoModal button {
+      opacity: 1 !important;
+      pointer-events: auto !important;
+    }
   </style>
 </head>
 <body>
-  <!-- Mantener igual toda la estructura HTML -->
   <div id="overlay"></div>
   <div id="player">
     <iframe id="videoPlayer" allow="autoplay" allowfullscreen height="100%" 
             width="100%" 
             style="border:none; width:100%; height:100%; position:absolute; left:0; top:0; overflow:hidden;">
     </iframe>
-  </div>
-  <button id="playButton">Ayudar a Kilua</button>
-  <button id="unmuteButton">Activar Sonido</button>
+  </div><button id="playButton">Ayudar a Kilua</button> <button id="unmuteButton">Activar Sonido</button>
 
   <div id="buttonContainer">
     <button class="loadAnotherButton" data-url="escena1-ordenador.html">Volver Atrás y Revisar Ordenador</button>
     <button class="loadAnotherButton" data-url="escena1-rejilla-palanca1.html">Mover Palanca</button>
     <button class="loadAnotherButton" data-url="escena1-codigo.html">Insertar Codigo</button>
-  </div>
-
-  <div id="codigoModal">
+  </div>  <!-- Modal para ingresar código de 4 cifras -->  <div id="codigoModal">
     <div id="codigoModalContent">
       <h2>Introduce el código</h2>
       <input id="codigoInput" type="text" maxlength="4" placeholder="####">
       <br>
       <button id="codigoAceptar">Aceptar</button>
     </div>
-  </div>
+  </div>  <!-- Agregar esto dentro del cuerpo, justo antes del script --><script>
+  document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll(".loadAnotherButton").forEach(button => {
+      button.addEventListener("click", function() {
+        if (this.dataset.url === "escena1-codigo.html") {
+          document.getElementById('codigoModal').style.display = 'flex';
+        } else {
+          window.location.href = this.dataset.url;
+        }
+      });
+    });
 
-  <script>
+    document.getElementById('codigoAceptar').addEventListener('click', function(event) {
+      event.preventDefault(); // Evita la redirección automática
+
+      const code = document.getElementById('codigoInput').value;
+
+      if (code === "5442") {
+        // Código correcto: redirige y cierra el modal
+        document.getElementById('codigoModal').style.display = 'none';
+        window.location.href = "escena1-tunel-giro.html";
+      } else {
+        // Código incorrecto: muestra mensaje y NO redirige
+        mostrarCodigoErroneo();
+      }
+    });
+
+    function mostrarCodigoErroneo() {
+      let errorModal = document.createElement("div");
+      errorModal.id = "errorModal";
+      errorModal.style.position = "fixed";
+      errorModal.style.top = "0";
+      errorModal.style.left = "0";
+      errorModal.style.width = "100%";
+      errorModal.style.height = "100%";
+      errorModal.style.background = "rgba(0, 0, 0, 0.8)";
+      errorModal.style.display = "flex";
+      errorModal.style.justifyContent = "center";
+      errorModal.style.alignItems = "center";
+      errorModal.style.zIndex = "4";
+
+      let errorContent = document.createElement("div");
+      errorContent.style.background = "#000";
+      errorContent.style.padding = "20px";
+      errorContent.style.border = "2px solid red";
+      errorContent.style.textAlign = "center";
+      errorContent.innerHTML = "<h2 style='color: red;'>¡CÓDIGO ERRÓNEO!</h2>";
+
+      errorModal.appendChild(errorContent);
+      document.body.appendChild(errorModal);
+
+      // Ocultar el modal de código y cerrar el error después de 2 segundos
+      document.getElementById('codigoModal').style.display = 'none';
+      setTimeout(() => {
+        document.body.removeChild(errorModal);
+      }, 2000);
+    }
+  });
+</script>  <script>
     document.addEventListener('DOMContentLoaded', function() {
-      // Configuraciones iniciales y controles de video (mantener igual)
       const playButton = document.getElementById('playButton');
       const unmuteButton = document.getElementById('unmuteButton');
       const videoPlayer = document.getElementById('videoPlayer');
       let videoStarted = false;
 
+      // Función para iniciar video
       const startVideo = (muted = true) => {
         if(!videoStarted) {
           videoStarted = true;
           videoPlayer.src = `https://streamable.com/e/ixv6jj?autoplay=1&nocontrols=1&mute=${muted ? 1 : 0}`;
           
+          // Ocultar overlay después de 500ms
           setTimeout(() => {
             document.getElementById('overlay').classList.add('hidden');
           }, 500);
 
+          // Mostrar botones a los 12 segundos desde que se inicia el video
           setTimeout(() => {
             const container = document.getElementById('buttonContainer');
             container.style.display = 'flex';
+            // Hacer visibles y activables los botones (ya que inician en opacity 0 y sin pointer-events)
             container.querySelectorAll('button').forEach(btn => {
               btn.style.opacity = '1';
               btn.style.pointerEvents = 'auto';
@@ -206,11 +265,13 @@
         }
       };
 
+      // Autoejecución segura
       setTimeout(() => {
         startVideo(true);
         playButton.style.display = 'none';
       }, 1000);
 
+      // Manejar activación de sonido
       const enableSound = () => {
         if(videoStarted) {
           videoPlayer.src = videoPlayer.src.replace('&mute=1', '&mute=0');
@@ -218,6 +279,7 @@
         }
       };
 
+      // Eventos de interacción
       document.body.addEventListener('click', () => {
         if(!videoStarted) startVideo(true);
       });
@@ -227,63 +289,24 @@
       // Control de botones de opciones
       document.querySelectorAll(".loadAnotherButton").forEach(button => {
         button.addEventListener("click", function() {
-          if (this.dataset.url === "escena1-codigo.html") {
+          if(this.dataset.url === "escena1-codigo.html") {
+            // Abrir el pop-up para insertar código
             document.getElementById('codigoModal').style.display = 'flex';
-            document.getElementById('codigoInput').value = ''; // Limpiar input
           } else {
             window.location.href = this.dataset.url;
           }
         });
       });
 
-      // Controlador único para el código
-      document.getElementById('codigoAceptar').addEventListener('click', function(event) {
-        event.preventDefault();
+      // Botón de Aceptar dentro del pop-up (sin modificar el resto de funciones)
+      document.getElementById('codigoAceptar').addEventListener('click', function() {
         const code = document.getElementById('codigoInput').value;
-
-        if (code === "5442") {
-          document.getElementById('codigoModal').style.display = 'none';
-          window.location.href = "escena1-tunel-giro.html";
+        if(code.length === 4) {
+          window.location.href = "gameover1.html";
         } else {
-          mostrarCodigoErroneo();
+          alert("Por favor, introduce un código de 4 cifras.");
         }
       });
-
-      function mostrarCodigoErroneo() {
-        const errorModal = document.createElement("div");
-        errorModal.id = "errorModal";
-        errorModal.style.cssText = `
-          position: fixed;
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: 100%;
-          background: rgba(0, 0, 0, 0.8);
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          z-index: 4;
-        `;
-
-        const errorContent = document.createElement("div");
-        errorContent.style.cssText = `
-          background: #000;
-          padding: 20px;
-          border: 2px solid red;
-          text-align: center;
-        `;
-        errorContent.innerHTML = "<h2 style='color: red; margin:0;'>¡CÓDIGO ERRÓNEO!</h2>";
-
-        errorModal.appendChild(errorContent);
-        document.body.appendChild(errorModal);
-
-        // Cerrar todo y resetear después de 2 segundos
-        setTimeout(() => {
-          document.getElementById('codigoModal').style.display = 'none';
-          document.body.removeChild(errorModal);
-        }, 2000);
-      }
     });
-  </script>
-</body>
+  </script></body>
 </html>
