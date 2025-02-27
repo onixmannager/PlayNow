@@ -68,38 +68,6 @@
       justify-content: center;  
       max-width: 90%;  
     }  
-    #unmuteButton {  
-      background: linear-gradient(145deg, #2d1a1a, #3d2d2d);  
-      border-color: #ff0000;  
-      color: #ff0000;  
-      text-shadow: 0 0 8px rgba(255, 0, 0, 0.5);  
-      box-shadow: 0 0 15px rgba(255, 0, 0, 0.3),  
-                  inset 0 0 10px rgba(255, 0, 0, 0.2);  
-    }  
-    @media (max-width: 768px) {  
-      button {  
-        padding: 10px 15px;  
-        font-size: 14px;  
-        margin: 5px;  
-        width: 100%;  
-        max-width: 280px;  
-      }  
-      #buttonContainer {  
-        bottom: 20px;  
-        gap: 10px;  
-        flex-direction: column;  
-      }  
-    }  
-    @media (max-width: 480px) {  
-      button {  
-        font-size: 13px;  
-        letter-spacing: 1px;  
-        padding: 8px 12px;  
-      }  
-      #buttonContainer {  
-        bottom: 10px;  
-      }  
-    }  
     .hidden {  
       display: none !important;  
     }  
@@ -149,11 +117,6 @@
       font-family: Arial, sans-serif;  
       text-shadow: 0 0 8px rgba(0,255,0,0.5);  
     }  
-    /* Sobrescribir estilos globales para que se vea el botón dentro del modal */  
-    #codigoModal button {  
-      opacity: 1 !important;  
-      pointer-events: auto !important;  
-    }  
   </style>  
 </head>  
 <body>  
@@ -163,14 +126,18 @@
             width="100%"   
             style="border:none; width:100%; height:100%; position:absolute; left:0; top:0; overflow:hidden;">  
     </iframe>  
-  </div>  <button id="playButton">Ayudar a Kilua</button>
-<button id="unmuteButton">Activar Sonido</button>
+  </div>  
+  <button id="playButton">Ayudar a Kilua</button>
+  <button id="unmuteButton">Activar Sonido</button>
 
   <div id="buttonContainer">  
     <button class="loadAnotherButton" data-url="escena1-ordenador.html">Volver Atrás y Revisar Ordenador</button>  
     <button class="loadAnotherButton" data-url="escena1-rejilla-palanca1.html">Mover Palanca</button>  
     <button class="loadAnotherButton" data-url="escena1-codigo.html">Insertar Codigo</button>  
-  </div>    <!-- Modal para ingresar código de 4 cifras -->    <div id="codigoModal">  
+  </div>    
+
+  <!-- Modal para ingresar código de 4 cifras -->    
+  <div id="codigoModal">  
     <div id="codigoModalContent">  
       <h2>Introduce el código</h2>  
       <input id="codigoInput" type="text" maxlength="4" placeholder="####">  
@@ -178,8 +145,6 @@
       <button id="codigoAceptar">Aceptar</button>  
     </div>  
   </div>    
-
-
 
   <script>
   document.addEventListener('DOMContentLoaded', function() {
@@ -197,117 +162,49 @@
       const code = document.getElementById('codigoInput').value;
 
       if (code === "5442") {
-        // Si el código es correcto, redirige a la página deseada
-        window.location.href = "escena1-tunel-giro.html";
+        mostrarCodigoCorrecto();
       } else {
-        // Si el código es incorrecto, mostrar el pop-up de error
         mostrarCodigoErroneo();
       }
     });
 
-    function mostrarCodigoErroneo() {
-      let errorModal = document.createElement("div");
-      errorModal.id = "errorModal";
-      errorModal.style.position = "fixed";
-      errorModal.style.top = "0";
-      errorModal.style.left = "0";
-      errorModal.style.width = "100%";
-      errorModal.style.height = "100%";
-      errorModal.style.background = "rgba(0, 0, 0, 0.8)";
-      errorModal.style.display = "flex";
-      errorModal.style.justifyContent = "center";
-      errorModal.style.alignItems = "center";
-      errorModal.style.zIndex = "4";
+    function mostrarCodigoCorrecto() {
+      let successModal = document.createElement("div");
+      successModal.id = "successModal";
+      successModal.style.position = "fixed";
+      successModal.style.top = "0";
+      successModal.style.left = "0";
+      successModal.style.width = "100%";
+      successModal.style.height = "100%";
+      successModal.style.background = "rgba(0, 255, 0, 0.8)";
+      successModal.style.display = "flex";
+      successModal.style.justifyContent = "center";
+      successModal.style.alignItems = "center";
+      successModal.style.zIndex = "4";
 
-      let errorContent = document.createElement("div");
-      errorContent.style.background = "#000";
-      errorContent.style.padding = "20px";
-      errorContent.style.border = "2px solid red";
-      errorContent.style.textAlign = "center";
-      errorContent.innerHTML = "<h2 style='color: red;'>¡CÓDIGO ERRÓNEO!</h2>";
+      let successContent = document.createElement("div");
+      successContent.style.background = "#000";
+      successContent.style.padding = "20px";
+      successContent.style.border = "2px solid #00ff00";
+      successContent.style.textAlign = "center";
+      successContent.innerHTML = "<h2 style='color: #00ff00;'>¡CÓDIGO CORRECTO!</h2>";
 
-      errorModal.appendChild(errorContent);
-      document.body.appendChild(errorModal);
+      successModal.appendChild(successContent);
+      document.body.appendChild(successModal);
 
-      // Ocultar el modal de código y cerrar el error después de 2 segundos
       document.getElementById('codigoModal').style.display = 'none';
+
       setTimeout(() => {
-        document.body.removeChild(errorModal);
+        document.body.removeChild(successModal);
+        window.location.href = "escena1-tunel-giro.html";
       }, 2000);
+    }
+
+    function mostrarCodigoErroneo() {
+      alert("Código incorrecto. Intenta de nuevo.");
     }
   });
   </script>
-  
-  
-  
-  <script>  
-    document.addEventListener('DOMContentLoaded', function() {  
-      const playButton = document.getElementById('playButton');  
-      const unmuteButton = document.getElementById('unmuteButton');  
-      const videoPlayer = document.getElementById('videoPlayer');  
-      let videoStarted = false;  
-  
-      // Función para iniciar video  
-      const startVideo = (muted = true) => {  
-        if(!videoStarted) {  
-          videoStarted = true;  
-          videoPlayer.src = `https://streamable.com/e/ixv6jj?autoplay=1&nocontrols=1&mute=${muted ? 1 : 0}`;  
-            
-          // Ocultar overlay después de 500ms  
-          setTimeout(() => {  
-            document.getElementById('overlay').classList.add('hidden');  
-          }, 500);  
-  
-          // Mostrar botones a los 12 segundos desde que se inicia el video  
-          setTimeout(() => {  
-            const container = document.getElementById('buttonContainer');  
-            container.style.display = 'flex';  
-            // Hacer visibles y activables los botones (ya que inician en opacity 0 y sin pointer-events)  
-            container.querySelectorAll('button').forEach(btn => {  
-              btn.style.opacity = '1';  
-              btn.style.pointerEvents = 'auto';  
-            });  
-          }, 37000);  
-        }  
-      };  
-  
-      // Autoejecución segura  
-      setTimeout(() => {  
-        startVideo(true);  
-        playButton.style.display = 'none';  
-      }, 1000);  
-  
-      // Manejar activación de sonido  
-      const enableSound = () => {  
-        if(videoStarted) {  
-          videoPlayer.src = videoPlayer.src.replace('&mute=1', '&mute=0');  
-          unmuteButton.style.display = 'none';  
-        }  
-      };  
-  
-      // Eventos de interacción  
-      document.body.addEventListener('click', () => {  
-        if(!videoStarted) startVideo(true);  
-      });  
-  
-      unmuteButton.addEventListener('click', enableSound);  
-  
-      // Control de botones de opciones  
-      document.querySelectorAll(".loadAnotherButton").forEach(button => {  
-        button.addEventListener("click", function() {  
-          if(this.dataset.url === "escena1-codigo.html") {  
-            // Abrir el pop-up para insertar código  
-            document.getElementById('codigoModal').style.display = 'flex';  
-          } else {  
-            window.location.href = this.dataset.url;  
-          }  
-        });  
-      });
-      });
 
-      
-  
-      
-  </script>
-</body>  
+</body>
 </html>
