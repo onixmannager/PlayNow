@@ -177,7 +177,7 @@
       <br>  
       <button id="codigoAceptar">Aceptar</button>  
     </div>  
-  </div> 
+  </div>    
 
 
 
@@ -193,17 +193,14 @@
       });
     });
 
-    document.getElementById('codigoAceptar').addEventListener('click', function(event) {
-      event.preventDefault(); // Evita la redirección automática
-
+    document.getElementById('codigoAceptar').addEventListener('click', function() {
       const code = document.getElementById('codigoInput').value;
 
       if (code === "5442") {
-        // Código correcto: redirige y cierra el modal
-        document.getElementById('codigoModal').style.display = 'none';
+        // Si el código es correcto, redirige a la página deseada
         window.location.href = "escena1-tunel-giro.html";
       } else {
-        // Código incorrecto: muestra mensaje y NO redirige
+        // Si el código es incorrecto, mostrar el pop-up de error
         mostrarCodigoErroneo();
       }
     });
@@ -240,7 +237,6 @@
     }
   });
   </script>
-  
   
   
   
@@ -308,14 +304,7 @@
         });  
       });  
   
-      // Botón de Aceptar dentro del pop-up (sin modificar el resto de funciones)  
-      // Botón de Aceptar dentro del pop-up (sin modificar el resto de funciones)  
-document.getElementById('codigoAceptar').addEventListener('click', function() {  
-    const code = document.getElementById('codigoInput').value;  
-    if (code.length !== 4) {  
-        alert("Por favor, introduce un código de 4 cifras.");  
-    }  
-});
-  </script>  
+      
+  </script>
 </body>  
 </html>
