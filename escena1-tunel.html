@@ -197,14 +197,17 @@
       });
     });
 
-    document.getElementById('codigoAceptar').addEventListener('click', function() {
+    document.getElementById('codigoAceptar').addEventListener('click', function(event) {
+      event.preventDefault(); // Evita la redirección automática
+
       const code = document.getElementById('codigoInput').value;
 
       if (code === "5442") {
-        // Si el código es correcto, redirige a la página deseada
+        // Código correcto: redirige y cierra el modal
+        document.getElementById('codigoModal').style.display = 'none';
         window.location.href = "escena1-tunel-giro.html";
       } else {
-        // Si el código es incorrecto, mostrar el pop-up de error
+        // Código incorrecto: muestra mensaje y NO redirige
         mostrarCodigoErroneo();
       }
     });
