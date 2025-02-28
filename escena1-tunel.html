@@ -163,19 +163,24 @@
             width="100%"     
             style="border:none; width:100%; height:100%; position:absolute; left:0; top:0; overflow:hidden;">    
     </iframe>    
-  </div>  <button id="playButton">Ayudar a Kilua</button>  
-<button id="unmuteButton">Activar Sonido</button>    <div id="buttonContainer">    
+  </div>    
+  <button id="playButton">Ayudar a Kilua</button>  
+  <button id="unmuteButton">Activar Sonido</button>    
+  <div id="buttonContainer">    
     <button class="loadAnotherButton" data-url="escena1-ordenador.html">Volver Atrás y Revisar Ordenador</button>    
     <button class="loadAnotherButton" data-url="escena1-rejilla-palanca1.html">Mover Palanca</button>    
     <button class="loadAnotherButton" data-url="escena1-codigo.html">Insertar Codigo</button>    
-  </div>    <!-- Modal para ingresar código de 4 cifras -->    <div id="codigoModal">    
+  </div>    
+  <!-- Modal para ingresar código de 4 cifras -->    
+  <div id="codigoModal">    
     <div id="codigoModalContent">    
       <h2>Introduce el código</h2>    
       <input id="codigoInput" type="text" maxlength="4" placeholder="####">    
       <br>    
       <button id="codigoAceptar">Aceptar</button>    
     </div>    
-  </div>        <script>  
+  </div>    
+  <script>  
   document.addEventListener('DOMContentLoaded', function() {  
     document.querySelectorAll(".loadAnotherButton").forEach(button => {  
       button.addEventListener("click", function() {  
@@ -191,8 +196,8 @@
       const code = document.getElementById('codigoInput').value;  
   
       if (code === "5442") {  
-        // Si el código es correcto, redirige a la página deseada  
-        window.location.href = "escena1-tunel-giro.html";  
+        // Mostrar mensaje de código correcto antes de redirigir  
+        mostrarCodigoCorrecto();  
       } else {  
         // Si el código es incorrecto, mostrar el pop-up de error  
         mostrarCodigoErroneo();  
@@ -229,8 +234,41 @@
         document.body.removeChild(errorModal);  
       }, 2000);  
     }  
+  
+    function mostrarCodigoCorrecto() {  
+      let correctModal = document.createElement("div");  
+      correctModal.id = "correctModal";  
+      correctModal.style.position = "fixed";  
+      correctModal.style.top = "0";  
+      correctModal.style.left = "0";  
+      correctModal.style.width = "100%";  
+      correctModal.style.height = "100%";  
+      correctModal.style.background = "rgba(0, 0, 0, 0.8)";  
+      correctModal.style.display = "flex";  
+      correctModal.style.justifyContent = "center";  
+      correctModal.style.alignItems = "center";  
+      correctModal.style.zIndex = "4";  
+  
+      let correctContent = document.createElement("div");  
+      correctContent.style.background = "#000";  
+      correctContent.style.padding = "20px";  
+      correctContent.style.border = "2px solid #00ff00";  
+      correctContent.style.textAlign = "center";  
+      correctContent.innerHTML = "<h2 style='color: #00ff00;'>¡CÓDIGO CORRECTO!!</h2>";  
+  
+      correctModal.appendChild(correctContent);  
+      document.body.appendChild(correctModal);  
+  
+      // Ocultar el modal de código y redirigir después de 2 segundos  
+      document.getElementById('codigoModal').style.display = 'none';  
+      setTimeout(() => {  
+        document.body.removeChild(correctModal);  
+        window.location.href = "escena1-tunel-giro.html";  
+      }, 2000);  
+    }  
   });  
-  </script>    <script>    
+  </script>    
+  <script>    
     document.addEventListener('DOMContentLoaded', function() {    
       const playButton = document.getElementById('playButton');    
       const unmuteButton = document.getElementById('unmuteButton');    
@@ -248,7 +286,7 @@
             document.getElementById('overlay').classList.add('hidden');    
           }, 500);    
     
-          // Mostrar botones a los 12 segundos desde que se inicia el video    
+          // Mostrar botones a los 37 segundos desde que se inicia el video    
           setTimeout(() => {    
             const container = document.getElementById('buttonContainer');    
             container.style.display = 'flex';    
@@ -293,11 +331,7 @@
           }    
         });    
       });  
-      });  
-  
-        
-    
-        
+    });    
   </script>  
 </body>    
 </html>
