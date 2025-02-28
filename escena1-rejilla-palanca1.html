@@ -167,14 +167,9 @@
   <button id="playButton">Ayudar a Kilua</button>  
   <button id="unmuteButton">Activar Sonido</button>    
   <div id="buttonContainer">    
-    
-    
-    
     <button class="loadAnotherButton" data-url="escena1-ordenador.html">Volver Atrás y Revisar Ordenador</button>    
-       
-    <button class="loadAnotherButton" data-url="escena1-codigo.html">Volver Atrás y Examinar Puerta</button> 
-
-    <button class="loadAnotherButton" data-url="escena1-rejilla-palanca2.html">Mover Palanca</button> 
+    <button class="loadAnotherButton" data-url="escena1-rejilla-palanca1.html">Mover Palanca</button>    
+    <button class="loadAnotherButton" data-url="escena1-codigo.html">Insertar Codigo</button>    
   </div>    
   <!-- Modal para ingresar código de 4 cifras -->    
   <div id="codigoModal">    
@@ -268,7 +263,7 @@
       document.getElementById('codigoModal').style.display = 'none';  
       setTimeout(() => {  
         document.body.removeChild(correctModal);  
-        window.location.href = "escena1-tunel-giro.html";  
+        window.location.href = "escena1-rejilla-codigocorrecto.html";  
       }, 2000);  
     }  
   });  
@@ -300,7 +295,7 @@
               btn.style.opacity = '1';    
               btn.style.pointerEvents = 'auto';    
             });    
-          }, 6800);    
+          }, 7000);    
         }    
       };    
     
