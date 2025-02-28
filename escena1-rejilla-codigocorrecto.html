@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="es">    
+<head>    
+  <meta charset="UTF-8">    
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">    
+  <title>Historia Interactiva</title>    
+  <style>    
+    /* Todos los estilos se mantienen igual */    
+    body, html {    
+      margin: 0;    
+      padding: 0;    
+      height: 100%;    
+      width: 100%;    
+      overflow: hidden;    
+      display: flex;    
+      flex-direction: column;    
+      align-items: center;    
+      justify-content: center;    
+      background-color: black;    
+    }    
+    #player {    
+      position: absolute;    
+      top: 0;    
+      left: 0;    
+      width: 100%;    
+      height: 100%;    
+      z-index: 0;    
+    }    
+    #overlay {    
+      position: absolute;    
+      top: 0;    
+      left: 0;    
+      width: 100%;    
+      height: 100%;    
+      background-color: rgba(0, 0, 0, 1);    
+      z-index: 1;    
+    }    
+    button {    
+      position: relative;    
+      z-index: 2;    
+      padding: 12px 25px;    
+      font-size: 18px;    
+      cursor: pointer;    
+      background: linear-gradient(145deg, #1a1a1a, #2d2d2d);    
+      color: #00ff00;    
+      border: 2px solid #00ff00;    
+      border-radius: 3px;    
+      text-transform: uppercase;    
+      letter-spacing: 2px;    
+      font-family: Arial, sans-serif;    
+      text-shadow: 0 0 8px rgba(0, 255, 0, 0.5);    
+      box-shadow: 0 0 15px rgba(0, 255, 0, 0.3),    
+                  inset 0 0 10px rgba(0, 255, 0, 0.2);    
+      transition: all 0.3s ease;    
+      margin: 0 10px;    
+      opacity: 0;    
+      pointer-events: none;    
+    }    
+    #buttonContainer {    
+      position: absolute;    
+      bottom: 50px;    
+      left: 50%;    
+      transform: translateX(-50%);    
+      display: none;    
+      z-index: 2;    
+      gap: 20px;    
+      flex-wrap: wrap;    
+      justify-content: center;    
+      max-width: 90%;    
+    }    
+    #unmuteButton {    
+      background: linear-gradient(145deg, #2d1a1a, #3d2d2d);    
+      border-color: #ff0000;    
+      color: #ff0000;    
+      text-shadow: 0 0 8px rgba(255, 0, 0, 0.5);    
+      box-shadow: 0 0 15px rgba(255, 0, 0, 0.3),    
+                  inset 0 0 10px rgba(255, 0, 0, 0.2);    
+    }    
+    @media (max-width: 768px) {    
+      button {    
+        padding: 10px 15px;    
+        font-size: 14px;    
+        margin: 5px;    
+        width: 100%;    
+        max-width: 280px;    
+      }    
+      #buttonContainer {    
+        bottom: 20px;    
+        gap: 10px;    
+        flex-direction: column;    
+      }    
+    }    
+    @media (max-width: 480px) {    
+      button {    
+        font-size: 13px;    
+        letter-spacing: 1px;    
+        padding: 8px 12px;    
+      }    
+      #buttonContainer {    
+        bottom: 10px;    
+      }    
+    }    
+    .hidden {    
+      display: none !important;    
+    }    
+    /* Estilos para el modal de código */    
+    #codigoModal {    
+      display: none;    
+      position: fixed;    
+      top: 0;    
+      left: 0;    
+      width: 100%;    
+      height: 100%;    
+      background: rgba(0, 0, 0, 0.8);    
+      z-index: 3;    
+      justify-content: center;    
+      align-items: center;    
+    }    
+    #codigoModalContent {    
+      background: #000;    
+      padding: 20px;    
+      border: 2px solid #00ff00;    
+      text-align: center;    
+    }    
+    #codigoModalContent h2 {    
+      color: #00ff00;    
+      margin-bottom: 20px;    
+    }    
+    #codigoInput {    
+      padding: 10px;    
+      font-size: 18px;    
+      text-align: center;    
+      width: 100px;    
+      margin-bottom: 20px;    
+      border: 2px solid #00ff00;    
+      background: #000;    
+      color: #00ff00;    
+    }    
+    #codigoAceptar {    
+      padding: 10px 20px;    
+      font-size: 18px;    
+      cursor: pointer;    
+      background: linear-gradient(145deg, #1a1a1a, #2d2d2d);    
+      color: #00ff00;    
+      border: 2px solid #00ff00;    
+      border-radius: 3px;    
+      text-transform: uppercase;    
+      letter-spacing: 2px;    
+      font-family: Arial, sans-serif;    
+      text-shadow: 0 0 8px rgba(0,255,0,0.5);    
+    }    
+    /* Sobrescribir estilos globales para que se vea el botón dentro del modal */    
+    #codigoModal button {    
+      opacity: 1 !important;    
+      pointer-events: auto !important;    
+    }    
+  </style>    
+</head>    
+<body>    
+  <div id="overlay"></div>    
+  <div id="player">    
+    <iframe id="videoPlayer" allow="autoplay" allowfullscreen height="100%"     
+            width="100%"     
+            style="border:none; width:100%; height:100%; position:absolute; left:0; top:0; overflow:hidden;">    
+    </iframe>    
+  </div>    
+  <button id="playButton">Ayudar a Kilua</button>  
+  <button id="unmuteButton">Activar Sonido</button>    
+  <div id="buttonContainer">    
+    
+    
+    
+    <button class="loadAnotherButton" data-url="escena1-ordenador.html">Volver Atrás y Revisar Ordenador</button>    
+       
+    <button class="loadAnotherButton" data-url="escena1-codigo.html">Volver Atrás y Examinar Puerta</button> 
+
+    <button class="loadAnotherButton" data-url="escena1-rejilla-palanca2.html">Mover Palanca</button> 
+  </div>    
+  <!-- Modal para ingresar código de 4 cifras -->    
+  <div id="codigoModal">    
+    <div id="codigoModalContent">    
+      <h2>Introduce el código</h2>    
+      <input id="codigoInput" type="text" maxlength="4" placeholder="####">    
+      <br>    
+      <button id="codigoAceptar">Aceptar</button>    
+    </div>    
+  </div>    
+  <script>  
+  document.addEventListener('DOMContentLoaded', function() {  
+    document.querySelectorAll(".loadAnotherButton").forEach(button => {  
+      button.addEventListener("click", function() {  
+        if (this.dataset.url === "escena1-codigo.html") {  
+          document.getElementById('codigoModal').style.display = 'flex';  
+        } else {  
+          window.location.href = this.dataset.url;  
+        }  
+      });  
+    });  
+  
+    document.getElementById('codigoAceptar').addEventListener('click', function() {  
+      const code = document.getElementById('codigoInput').value;  
+  
+      if (code === "5442") {  
+        // Mostrar mensaje de código correcto antes de redirigir  
+        mostrarCodigoCorrecto();  
+      } else {  
+        // Si el código es incorrecto, mostrar el pop-up de error  
+        mostrarCodigoErroneo();  
+      }  
+    });  
+  
+    function mostrarCodigoErroneo() {  
+      let errorModal = document.createElement("div");  
+      errorModal.id = "errorModal";  
+      errorModal.style.position = "fixed";  
+      errorModal.style.top = "0";  
+      errorModal.style.left = "0";  
+      errorModal.style.width = "100%";  
+      errorModal.style.height = "100%";  
+      errorModal.style.background = "rgba(0, 0, 0, 0.8)";  
+      errorModal.style.display = "flex";  
+      errorModal.style.justifyContent = "center";  
+      errorModal.style.alignItems = "center";  
+      errorModal.style.zIndex = "4";  
+  
+      let errorContent = document.createElement("div");  
+      errorContent.style.background = "#000";  
+      errorContent.style.padding = "20px";  
+      errorContent.style.border = "2px solid red";  
+      errorContent.style.textAlign = "center";  
+      errorContent.innerHTML = "<h2 style='color: red;'>¡CÓDIGO ERRÓNEO!</h2>";  
+  
+      errorModal.appendChild(errorContent);  
+      document.body.appendChild(errorModal);  
+  
+      // Ocultar el modal de código y cerrar el error después de 2 segundos  
+      document.getElementById('codigoModal').style.display = 'none';  
+      setTimeout(() => {  
+        document.body.removeChild(errorModal);  
+      }, 2000);  
+    }  
+  
+    function mostrarCodigoCorrecto() {  
+      let correctModal = document.createElement("div");  
+      correctModal.id = "correctModal";  
+      correctModal.style.position = "fixed";  
+      correctModal.style.top = "0";  
+      correctModal.style.left = "0";  
+      correctModal.style.width = "100%";  
+      correctModal.style.height = "100%";  
+      correctModal.style.background = "rgba(0, 0, 0, 0.8)";  
+      correctModal.style.display = "flex";  
+      correctModal.style.justifyContent = "center";  
+      correctModal.style.alignItems = "center";  
+      correctModal.style.zIndex = "4";  
+  
+      let correctContent = document.createElement("div");  
+      correctContent.style.background = "#000";  
+      correctContent.style.padding = "20px";  
+      correctContent.style.border = "2px solid #00ff00";  
+      correctContent.style.textAlign = "center";  
+      correctContent.innerHTML = "<h2 style='color: #00ff00;'>¡CÓDIGO CORRECTO!!</h2>";  
+  
+      correctModal.appendChild(correctContent);  
+      document.body.appendChild(correctModal);  
+  
+      // Ocultar el modal de código y redirigir después de 2 segundos  
+      document.getElementById('codigoModal').style.display = 'none';  
+      setTimeout(() => {  
+        document.body.removeChild(correctModal);  
+        window.location.href = "escena1-tunel-giro.html";  
+      }, 2000);  
+    }  
+  });  
+  </script>    
+  <script>    
+    document.addEventListener('DOMContentLoaded', function() {    
+      const playButton = document.getElementById('playButton');    
+      const unmuteButton = document.getElementById('unmuteButton');    
+      const videoPlayer = document.getElementById('videoPlayer');    
+      let videoStarted = false;    
+    
+      // Función para iniciar video    
+      const startVideo = (muted = true) => {    
+        if(!videoStarted) {    
+          videoStarted = true;    
+          videoPlayer.src = `https://streamable.com/e/ixv6jj?autoplay=1&nocontrols=1&mute=${muted ? 1 : 0}`;    
+              
+          // Ocultar overlay después de 500ms    
+          setTimeout(() => {    
+            document.getElementById('overlay').classList.add('hidden');    
+          }, 500);    
+    
+          // Mostrar botones a los 37 segundos desde que se inicia el video    
+          setTimeout(() => {    
+            const container = document.getElementById('buttonContainer');    
+            container.style.display = 'flex';    
+            // Hacer visibles y activables los botones (ya que inician en opacity 0 y sin pointer-events)    
+            container.querySelectorAll('button').forEach(btn => {    
+              btn.style.opacity = '1';    
+              btn.style.pointerEvents = 'auto';    
+            });    
+          }, 3000);    
+        }    
+      };    
+    
+      // Autoejecución segura    
+      setTimeout(() => {    
+        startVideo(true);    
+        playButton.style.display = 'none';    
+      }, 1000);    
+    
+      // Manejar activación de sonido    
+      const enableSound = () => {    
+        if(videoStarted) {    
+          videoPlayer.src = videoPlayer.src.replace('&mute=1', '&mute=0');    
+          unmuteButton.style.display = 'none';    
+        }    
+      };    
+    
+      // Eventos de interacción    
+      document.body.addEventListener('click', () => {    
+        if(!videoStarted) startVideo(true);    
+      });    
+    
+      unmuteButton.addEventListener('click', enableSound);    
+    
+      // Control de botones de opciones    
+      document.querySelectorAll(".loadAnotherButton").forEach(button => {    
+        button.addEventListener("click", function() {    
+          if(this.dataset.url === "escena1-codigo.html") {    
+            // Abrir el pop-up para insertar código    
+            document.getElementById('codigoModal').style.display = 'flex';    
+          } else {    
+            window.location.href = this.dataset.url;    
+          }    
+        });    
+      });  
+    });    
+  </script>  
+</body>    
+</html>
